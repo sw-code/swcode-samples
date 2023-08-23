@@ -4,6 +4,7 @@ import io.swcode.authz.demo.application.dto.Pet
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -17,7 +18,7 @@ class PetsController {
 
     @PostMapping("/pets")
     @PreAuthorize("hasAnyRole('admin')")
-    fun addPet(pet: Pet): Pet {
+    fun addPet(@RequestBody pet: Pet): Pet {
         pets.add(pet)
         return pet
     }

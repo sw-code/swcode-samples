@@ -10,3 +10,14 @@ docker-compose up
 ```
 
 This will start Keycloak and Postgres, and these will be ready to use with the Spring Boot application located in the app directory.
+
+## Postman 
+
+There is an export of a postman collection `AuthZ Samples.postman_collection.json` that may be used to make API calls against the service, with prepared authentication.
+
+The pre-configured users:
+
+| User  | Password | Roles |
+|-------|----------|-------|
+| fred  | fred     |       |
+| admin | admin    | admin |

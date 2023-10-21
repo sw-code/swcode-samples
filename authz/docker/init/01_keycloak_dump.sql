@@ -1912,7 +1912,8 @@ b5e1dda1-653a-4aa6-a097-cf9477f787c3	5b5d212a-d334-4931-b8bb-e2fed2616b44
 
 COPY public.credential (id, salt, type, user_id, created_date, user_label, secret_data, credential_data, priority) FROM stdin;
 0d76fe9d-c036-4aa8-a4a6-67f215516278	\N	password	84059de0-00e4-43ab-82f5-5b7b217cf8dd	1689880841679	\N	{"value":"crJQjC2jI5sMtZ2WljBsrmxrP2UfihlXbFAP1NS+BEQ=","salt":"egIduUB32KVgozNF9zYeRA==","additionalParameters":{}}	{"hashIterations":27500,"algorithm":"pbkdf2-sha256","additionalParameters":{}}	10
-f1c000bf-1bb6-42b4-bc08-4f1328c62195	\N	password	bb86ca2a-fe35-4594-9d5b-65d6a72119fa	1689970199406	My password	{"value":"8E0s/usG8vNskRPfFrOgUSA3uDThHOIrCp1bNI+0t80=","salt":"DwEdhpcWxJ/rCacXRpYcUA==","additionalParameters":{}}	{"hashIterations":27500,"algorithm":"pbkdf2-sha256","additionalParameters":{}}	10
+14d1ec5a-4ea9-4b11-88ef-42a68f343bb9	\N	password	23beab02-8cfc-4845-974e-4072f14b5acb	1697912203804	My password	{"value":"d99OhUO+F/crmNlZbwS7M/n4T/wnNb1ompI2e/yiYT0=","salt":"z8INmSMMUfzhz65DbRA4xQ==","additionalParameters":{}}	{"hashIterations":27500,"algorithm":"pbkdf2-sha256","additionalParameters":{}}	10
+f1c000bf-1bb6-42b4-bc08-4f1328c62195	\N	password	bb86ca2a-fe35-4594-9d5b-65d6a72119fa	1697912212093	My password	{"value":"LG5FQ/ffW37q2RxMKRNIop1ziNIc/L5cVuRe3oKMg5I=","salt":"UmoXCSlDDWOS5cq9Pl8sYw==","additionalParameters":{}}	{"hashIterations":27500,"algorithm":"pbkdf2-sha256","additionalParameters":{}}	10
 \.
 
 
@@ -2732,6 +2733,7 @@ COPY public.user_consent_client_scope (user_consent_id, scope_id) FROM stdin;
 COPY public.user_entity (id, email, email_constraint, email_verified, enabled, federation_link, first_name, last_name, realm_id, username, created_timestamp, service_account_client_link, not_before) FROM stdin;
 84059de0-00e4-43ab-82f5-5b7b217cf8dd	\N	21a65883-f3a0-46a0-85eb-a5b9f320c5ea	f	t	\N	\N	\N	63acd062-f967-4069-bfe4-7ed0f15dce58	admin	1689880841517	\N	0
 bb86ca2a-fe35-4594-9d5b-65d6a72119fa	\N	fd6d4308-fab8-4601-9c42-4d4603847529	f	t	\N			63acd062-f967-4069-bfe4-7ed0f15dce58	fred	1689970192317	\N	0
+23beab02-8cfc-4845-974e-4072f14b5acb	\N	d39e85b2-a227-489e-8ebb-c3627aae612f	f	t	\N			63acd062-f967-4069-bfe4-7ed0f15dce58	jane	1697912194550	\N	0
 \.
 
 
@@ -2780,7 +2782,6 @@ COPY public.user_group_membership (group_id, user_id) FROM stdin;
 --
 
 COPY public.user_required_action (user_id, required_action) FROM stdin;
-bb86ca2a-fe35-4594-9d5b-65d6a72119fa	UPDATE_PASSWORD
 \.
 
 
@@ -2792,6 +2793,7 @@ COPY public.user_role_mapping (role_id, user_id) FROM stdin;
 b5e1dda1-653a-4aa6-a097-cf9477f787c3	84059de0-00e4-43ab-82f5-5b7b217cf8dd
 7a16a161-e422-44c9-a00e-be5f8d98a4a0	84059de0-00e4-43ab-82f5-5b7b217cf8dd
 b5e1dda1-653a-4aa6-a097-cf9477f787c3	bb86ca2a-fe35-4594-9d5b-65d6a72119fa
+b5e1dda1-653a-4aa6-a097-cf9477f787c3	23beab02-8cfc-4845-974e-4072f14b5acb
 \.
 
 

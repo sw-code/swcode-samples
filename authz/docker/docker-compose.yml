@@ -49,3 +49,36 @@ services:
       default:
         aliases:
           - keycloak_local
+
+  keto-migration:
+    image: oryd/keto:v0.11.1
+    command: migrate up -y -c /home/ory/keto.yml
+    restart: no
+    environment:
+      DSN: postgres://keto:keto@postgres:5432/keto
+    volumes:
+      - type: bind
+        source: keto/.
+        target: /home/ory
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  keto:
+    image: oryd/keto:v0.11.1
+    ports:
+      - "4466:4466"
+      - "4467:4467"
+    command: serve -c /home/ory/keto.yml
+    restart: on-failure
+    environment:
+      DSN: postgres://keto:keto@postgres:5432/keto
+    volumes:
+      - type: bind
+        source: keto/.
+        target: /home/ory
+    depends_on:
+      postgres:
+        condition: service_healthy
+      keto-migration:
+        condition: service_completed_successfully

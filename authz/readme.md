@@ -20,4 +20,5 @@ The pre-configured users:
 | User  | Password | Roles |
 |-------|----------|-------|
 | fred  | fred     |       |
+| jane  | jane     |       |
 | admin | admin    | admin |

@@ -1,0 +1,24 @@
+version: '3'
+
+networks:
+  demo_test_lan:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    hostname: postgres
+    networks:
+      - demo_test_lan
+    environment:
+      POSTGRES_USER: outbox
+      POSTGRES_PASSWORD: outbox
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"

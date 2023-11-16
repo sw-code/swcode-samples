@@ -1,0 +1,14 @@
+### Get users
+http://localhost:8080/users
+
+### Create user
+POST http://localhost:8080/users
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "John"
+}
+
+### Create failing event
+POST http://localhost:8080/failng-events

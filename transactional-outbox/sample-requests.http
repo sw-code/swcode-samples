@@ -11,4 +11,4 @@ Content-Type: application/json
 }
 
 ### Create failing event
-POST http://localhost:8080/failng-events
+POST http://localhost:8080/failing-events

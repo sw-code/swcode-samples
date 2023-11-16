@@ -9,7 +9,7 @@ import java.util.UUID
 
 @RestController
 class FailingEventController(private val eventPublisher: EventPublisher) {
-    @PostMapping("failng-events")
+    @PostMapping("failing-events")
     @Transactional
     fun publishFailingEvent(): FailingEvent {
         return FailingEvent().also {

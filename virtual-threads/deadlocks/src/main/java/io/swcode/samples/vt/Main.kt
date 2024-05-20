@@ -39,7 +39,7 @@ fun main(args: Array<String>) {
 fun runRequests(transactionDispatcher: CoroutineDispatcher) {
     val scope = CoroutineScope(SupervisorJob())
 
-    val requests = 1000
+    val requests = 100
 
     val jobs = (1..requests).map {
         scope.async(context = Dispatchers.Default) {

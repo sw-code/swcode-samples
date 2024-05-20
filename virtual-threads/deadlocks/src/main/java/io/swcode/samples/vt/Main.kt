@@ -32,7 +32,7 @@ fun main(args: Array<String>) {
         SchemaUtils.create(FooTable)
     }
 
-    // use either Dispatchers.IO to force deadlock, or VIRTUAL_THREAD_DISPATCHER to make it nob-blocking
+    // use either Dispatchers.IO to force deadlock, or VIRTUAL_THREAD_DISPATCHER to make it non-blocking
     runRequests(VIRTUAL_THREAD_DISPATCHER)
 }
 

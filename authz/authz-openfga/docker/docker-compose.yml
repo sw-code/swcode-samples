@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15.3-alpine
+    container_name: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+      POSTGRES_DB: keycloak
+    volumes:
+      - "./init:/docker-entrypoint-initdb.d"      
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'PGPASSWORD=keycloak pg_isready -U keycloak -d keycloak'"]
+      interval: 5s
+      timeout: 60s
+      retries: 10
+      start_period: 5s      
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.1
+    hostname: "keycloak-local"
+    restart: unless-stopped
+    command: start-dev
+    stop_grace_period: 30s
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8090:8080/tcp"
+      - "8090:8080/udp"
+    labels:
+      name: "keycloak-local"
+    environment:
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 8090
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak?characterEncoding=UTF-8
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: "true"
+      KC_LOG_LEVEL: info
+    networks:
+      default:
+        aliases:
+          - keycloak_local
+
+  migrate:
+    depends_on:
+      postgres:
+        condition: service_healthy
+    image: openfga/openfga:latest
+    container_name: migrate
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=postgres
+      - OPENFGA_DATASTORE_URI=postgres://openfga:openfga@postgres:5432/openfga?sslmode=disable
+    command: migrate
+
+  openfga-authz-model:
+    depends_on:
+      openfga:
+        condition: service_healthy
+    image: openfga/cli:latest
+    container_name: openfga-authz-model
+    volumes:
+      - type: bind
+        source: openfga/model.fga
+        target: /opt/model.fga
+    command: store create --name "demo" --model /opt/model.fga --api-url=http://openfga:8080
+
+  openfga:
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    image: openfga/openfga:latest
+    container_name: openfga
+    command: run
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=postgres
+      - OPENFGA_DATASTORE_URI=postgres://openfga:openfga@postgres:5432/openfga?sslmode=disable
+      - OPENFGA_DATASTORE_MAX_OPEN_CONNS=100 #see postgres container
+      - OPENFGA_TRACE_ENABLED=false
+    networks:
+      - default
+    ports:
+      - "8080:8080" #http
+      - "8081:8081" #grpc
+      - "3000:3000" #playground
+      - "2112:2112" #prometheus metrics
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/grpc_health_probe", "-addr=openfga:8081"]
+      interval: 5s
+      timeout: 30s
+      retries: 3

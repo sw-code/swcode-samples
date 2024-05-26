@@ -1,0 +1,26 @@
+name: demo
+model_file: ./model.fga
+tuples:
+  - user: organization:GlobalCorp
+    relation: parent
+    object: organization:EcoLIfe
+  - user: user:Jane
+    relation: viewer
+    object: organization:GlobalCorp
+  - user: user:Jane
+    relation: editor
+    object:  organization:EcoLIfe
+
+tests:
+  - name: Jane has limited access
+    check:
+      - user: user:Jane
+        object: organization:GlobalCorp
+        assertions:
+          can_view: true
+          can_edit: false
+      - user: user:Jane
+        object: organization:EcoLIfe
+        assertions:
+          can_view: true
+          can_edit: true

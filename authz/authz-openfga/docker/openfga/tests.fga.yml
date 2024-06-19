@@ -5,10 +5,10 @@ tuples:
     relation: parent
     object: organization:EcoLIfe
   - user: user:Jane
-    relation: viewer
+    relation: can_view
     object: organization:GlobalCorp
   - user: user:Jane
-    relation: editor
+    relation: can_edit
     object:  organization:EcoLIfe
 
 tests:

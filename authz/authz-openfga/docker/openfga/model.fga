@@ -7,8 +7,5 @@ type organization
   relations
     define owner: [user] or owner from parent
     define parent: [organization]
-    define editor: [user] or editor from parent or owner
-    define viewer: [user] or viewer from parent or owner
-
-    define can_view: viewer
-    define can_edit: editor
+    define can_edit: [user] or can_edit from parent or owner
+    define can_view: [user] or can_view from parent or owner
